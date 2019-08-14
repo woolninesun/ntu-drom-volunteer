@@ -69,13 +69,14 @@ const GSXToWebApp: React.FunctionComponent<{}> = () => {
     }
 
     const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
-    const sheetID: string = urlParams.get('sheetid') || "";
+    let sheetID: string = urlParams.get('sheetid') || "";
+
     if (sheetID === "") {
+      sheetID = "1WWh4gfO9Iak3XzPZb0CYN4_N-g5bALiDZsnN97qn0nk";
       // setIsError(true);
-      return;
+      // return
     }
 
-    // const sheetID = 1WWh4gfO9Iak3XzPZb0CYN4_N-g5bALiDZsnN97qn0nk
     const apidomain: string = "https://spreadsheets.google.com";
     const apiQuery: string = `feeds/worksheets/${sheetID}/public/values?alt=json`;
     const apiUrl: string = `${apidomain}/${apiQuery}`;
