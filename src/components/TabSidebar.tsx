@@ -59,7 +59,7 @@ const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
         >{menuItems}
         </Sidebar>
         <Sidebar.Pusher dimmed={mobileSidebarVisible}>
-          <Menu borderless compact fixed="left" size="small">
+          <Menu borderless compact fixed="left" size="small" inverted color="blue">
             <Menu.Item
               className="mobile-sidebar-toggle"
               onClick={() => setMobileSidebarVisible(true)}

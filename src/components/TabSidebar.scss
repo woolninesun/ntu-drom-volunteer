@@ -12,6 +12,10 @@
   }
 }
 
+.ui.fixed.left.menu+.ui.grid {
+  padding-top: 1rem;
+}
+
 .ui.grid {
   margin: 0 !important;
 
