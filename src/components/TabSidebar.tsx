@@ -15,14 +15,12 @@ interface TabSidebarProps {
 const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
   const { title, tabMenuItems, linkMenuItems } = props;
 
-  const [mobileSidebarVisible, setMobileSidebarvisible] = React.useState<boolean>(false);
-  const handleMobileSidebarShow = () => setMobileSidebarvisible(true);
-  const handleMobileSidebarHide = () => setMobileSidebarvisible(false);
+  const [mobileSidebarVisible, setMobileSidebarVisible] = React.useState<boolean>(false);
 
   const [ActiveIndex, setActiveIndex] = React.useState<number>(0);
   const handelMenuItemClick = (event: React.SyntheticEvent, data: any) => {
     setActiveIndex(data['index']);
-    handleMobileSidebarHide();
+    setMobileSidebarVisible(false);
   }
 
   const menuItems = (<React.Fragment>
@@ -44,34 +42,31 @@ const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
     ))}
   </React.Fragment>);
 
-  type width = 1 | 2 | 7 | 6 | 5 | 4 | 3 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
-  const tabPanel = (width: width) => (
-    <Grid>
-      {tabMenuItems.map((menuItems, index) =>
-        <Grid.Column key={index} className={(ActiveIndex === index) ? "" : "hidden"}>
-          {menuItems.panel}
-        </Grid.Column>
-      )}
-    </Grid>
-  );
+  const tabPanel = (<Grid>
+    {tabMenuItems.map((menuItems, index) =>
+      <Grid.Column key={index} className={(ActiveIndex === index) ? "" : "hidden"}>
+        {menuItems.panel}
+      </Grid.Column>
+    )}
+  </Grid>);
 
   return (<Grid>
     <Grid.Row columns={1} only='mobile tablet'>
       <Sidebar.Pushable as={Grid.Column} className='mobile-sidebar-container'>
         <Sidebar
           as={Menu} vertical animation='overlay' color='blue'
-          onHide={handleMobileSidebarHide} visible={mobileSidebarVisible}
+          onHide={() => setMobileSidebarVisible(false)} visible={mobileSidebarVisible}
         >{menuItems}
         </Sidebar>
         <Sidebar.Pusher dimmed={mobileSidebarVisible}>
           <Menu borderless compact fixed="left" size="small">
             <Menu.Item
               className="mobile-sidebar-toggle"
-              onClick={handleMobileSidebarShow}
+              onClick={() => setMobileSidebarVisible(true)}
             ><Icon fitted name="sidebar"></Icon>
             </Menu.Item>
           </Menu>
-          {tabPanel(15)}
+          {tabPanel}
         </Sidebar.Pusher>
       </Sidebar.Pushable>
     </Grid.Row>
@@ -81,7 +76,7 @@ const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
         >{menuItems}
         </Menu>
         <Sidebar.Pusher>
-          {tabPanel(13)}
+          {tabPanel}
         </Sidebar.Pusher>
       </Sidebar.Pushable>
     </Grid.Row>
