@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './TabSidebar.css';
+import './TabSidebar.scss';
 
 import { Sidebar, Grid, Menu, Icon, Divider, Header } from "semantic-ui-react";
 
@@ -46,12 +46,10 @@ const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
 
   type width = 1 | 2 | 7 | 6 | 5 | 4 | 3 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
   const tabPanel = (width: width) => (
-    <Grid className='app-container'>
+    <Grid>
       {tabMenuItems.map((menuItems, index) =>
-        <Grid.Column key={index}
-          className={(ActiveIndex === index) ? "" : "hidden"}
-          floated='right' width={width}
-        >{menuItems.panel}
+        <Grid.Column key={index} className={(ActiveIndex === index) ? "" : "hidden"}>
+          {menuItems.panel}
         </Grid.Column>
       )}
     </Grid>
@@ -79,8 +77,8 @@ const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
     </Grid.Row>
     <Grid.Row columns={1} only='computer'>
       <Sidebar.Pushable as={Grid.Column} className='computer-sidebar-container'>
-        <Menu vertical fixed="left" pointing secondary color='blue'>
-          {menuItems}
+        <Menu vertical fixed="left" pointing secondary color='blue'
+        >{menuItems}
         </Menu>
         <Sidebar.Pusher>
           {tabPanel(13)}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './static/semantic/semantic.min.css';
-import './GSXToWebApp.css';
+import './GSXToWebApp.scss';
 
 import DataViewTab from "./DataViewTab";
 import TabSidebar from "./components/TabSidebar";

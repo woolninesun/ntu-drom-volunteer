@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './CardView.css';
+import './CardView.scss';
 
 import { Card, Table } from "semantic-ui-react";
 

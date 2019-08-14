@@ -3,7 +3,7 @@ import React from 'react';
 import { Header } from "semantic-ui-react";
 import CardView from "./components/CardView";
 
-import './DataViewTab.css';
+import './DataViewTab.scss';
 
 import { getRowDataFromWorksheetEntries } from './utilities/gsx';
 
@@ -27,8 +27,8 @@ const DataView: React.FunctionComponent<DataViewProps> = (props: DataViewProps) 
     fetch(worksheet.link)
       .then(response => response.json())
       .then((result) => {
-        setIsLoading(false);
         setRowDatas(getRowDataFromWorksheetEntries(result.feed.entry));
+        setIsLoading(false);
       }, (error) => {
         // setIsError(true);
       });

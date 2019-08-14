@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
+import './index.scss';
 
 import GSXToWebApp from './GSXToWebApp';
 import * as serviceWorker from './serviceWorker';
