@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Header } from "semantic-ui-react";
-import CardView from "./components/CardView";
+import { Header } from 'semantic-ui-react';
+import CardView from './components/CardView';
 
 import './DataViewTab.scss';
 
@@ -16,7 +16,7 @@ interface DataViewProps {
   }
 };
 
-const DataView: React.FunctionComponent<DataViewProps> = (props: DataViewProps) => {
+const DataView: React.FunctionComponent<DataViewProps> = (props) => {
   const { worksheet } = props;
 
   // const [isError, setIsError] = useState<boolean>(false);
@@ -35,8 +35,8 @@ const DataView: React.FunctionComponent<DataViewProps> = (props: DataViewProps) 
   }, [worksheet]);
 
   return (
-    <div className="data-view-tab">
-      <Header as="h1" textAlign="center" dividing>{worksheet.title}</Header>
+    <div className='data-view-tab'>
+      <Header as='h1' textAlign='center' dividing>{worksheet.title}</Header>
       <CardView
         isLoading={isLoading}
         headerContent={Object.keys(rowDatas[0] || {})}

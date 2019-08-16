@@ -2,7 +2,7 @@ import { SheetRawObject, WorksheetCellEntry } from '../interface/gsx';
 import { RowData } from '../interface/app';
 
 export function getStringFromRawObject(title: SheetRawObject): string {
-  return (title && title.$t) ? title.$t : "";
+  return (title && title.$t) ? title.$t : '';
 }
 
 export function getRowDataFromWorksheetEntries(entries: WorksheetCellEntry[]): RowData[] {

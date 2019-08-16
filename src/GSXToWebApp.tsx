@@ -3,21 +3,22 @@ import React from 'react';
 import './static/semantic/semantic.min.css';
 import './GSXToWebApp.scss';
 
-import DataViewTab from "./DataViewTab";
-import TabSidebar from "./components/TabSidebar";
+import DataViewTab from './DataViewTab';
+import TabSidebar from './components/TabSidebar';
+import Loading from './components/Loading';
 
 import { getStringFromRawObject, getRowDataFromWorksheetEntries } from './utilities/gsx';
 
 import { WorksheetLink, WorksheetEntry } from './interface/gsx';
 import { RowData, WorksheetData, Settings } from './interface/app';
 
-const defaultSettings: Settings = { title: "", links: [] };
-const defaultSettingData: RowData = { attribute: "", content: "" };
+const defaultSettings: Settings = { title: '', links: [] };
+const defaultSettingData: RowData = { attribute: '', content: '' };
 const linkRegexp = new RegExp(/^\[(.+)\]\((.+)\)$/);
 
 const GSXToWebApp: React.FunctionComponent<{}> = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [title, setTitle] = React.useState<string>("");
+  const [title, setTitle] = React.useState<string>('');
   const [settings, setSettings] = React.useState<Settings>(defaultSettings);
   const [worksheets, setWorksheets] = React.useState<WorksheetData[]>([]);
 
@@ -32,17 +33,17 @@ const GSXToWebApp: React.FunctionComponent<{}> = () => {
               (rowData: RowData) => {
                 const rawSetting = Object.assign(defaultSettingData, rowData);
 
-                if (rawSetting.attribute === "title") {
+                if (rawSetting.attribute === 'title') {
                   rawSettings.title = rawSetting.content;
                 }
 
-                if (rawSetting.attribute === "links") {
+                if (rawSetting.attribute === 'links') {
                   const matches: string[] = rawSetting.content.match(linkRegexp) || [];
                   rawSettings.links.push({ name: matches[1], href: matches[2] });
                 }
               }
             );
-            setSettings(rawSettings);
+            setSettings({...rawSettings});
           }
         }, (error) => {
           // setIsError(true);
@@ -51,7 +52,7 @@ const GSXToWebApp: React.FunctionComponent<{}> = () => {
 
     const getWorksheetLink = (links: WorksheetLink[], target: RegExp): string => {
       const link: WorksheetLink | undefined = links.find(link => target.test(link.rel));
-      return link ? `${link.href}?alt=json` : "";
+      return link ? `${link.href}?alt=json` : '';
     }
 
     const getWorksheetDataFromEntries = (entries: WorksheetEntry[]): WorksheetData[] => {
@@ -60,8 +61,8 @@ const GSXToWebApp: React.FunctionComponent<{}> = () => {
         const sheetTitle = getStringFromRawObject(entry.title);
         const sheetLink = getWorksheetLink(entry.link, /#listfeed/);
 
-        if (sheetTitle === "" || sheetLink === "") { return; }
-        if (sheetTitle === "Settings") { getSettingsFromWorksheet(sheetLink); return; }
+        if (sheetTitle === '' || sheetLink === '') { return; }
+        if (sheetTitle === 'Settings') { getSettingsFromWorksheet(sheetLink); return; }
 
         worksheets.push({ title: sheetTitle, link: sheetLink });
       });
@@ -69,15 +70,15 @@ const GSXToWebApp: React.FunctionComponent<{}> = () => {
     }
 
     const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
-    let sheetID: string = urlParams.get('sheetid') || "";
+    let sheetID: string = urlParams.get('sheetid') || '';
 
-    if (sheetID === "") {
-      sheetID = "1WWh4gfO9Iak3XzPZb0CYN4_N-g5bALiDZsnN97qn0nk";
+    if (sheetID === '') {
+      sheetID = '1WWh4gfO9Iak3XzPZb0CYN4_N-g5bALiDZsnN97qn0nk';
       // setIsError(true);
       // return
     }
 
-    const apidomain: string = "https://spreadsheets.google.com";
+    const apidomain: string = 'https://spreadsheets.google.com';
     const apiQuery: string = `feeds/worksheets/${sheetID}/public/values?alt=json`;
     const apiUrl: string = `${apidomain}/${apiQuery}`;
 
@@ -94,8 +95,8 @@ const GSXToWebApp: React.FunctionComponent<{}> = () => {
       });
   }, []);
 
-  return <React.Fragment>{
-    isLoading ? "" : (
+  return (
+    <Loading isLoading={isLoading} >
       <TabSidebar
         title={settings.title || title}
         tabMenuItems={worksheets.map((worksheet) => ({
@@ -103,8 +104,8 @@ const GSXToWebApp: React.FunctionComponent<{}> = () => {
           panel: (<DataViewTab worksheet={worksheet} />)
         }))}
         linkMenuItems={settings.links} />
-    )
-  }</React.Fragment>;
+    </Loading>
+  );
 }
 
 export default GSXToWebApp;

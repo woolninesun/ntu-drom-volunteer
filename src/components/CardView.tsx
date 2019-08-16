@@ -2,7 +2,7 @@ import React from 'react';
 
 import './CardView.scss';
 
-import { Card, Table } from "semantic-ui-react";
+import { Card, Table } from 'semantic-ui-react';
 
 import { RowData } from '../interface/app';
 
@@ -12,12 +12,12 @@ interface CardViewProps {
   rowDatas: RowData[]
 };
 
-const CardView: React.FunctionComponent<CardViewProps> = (props: CardViewProps) => {
+const CardView: React.FunctionComponent<CardViewProps> = (props) => {
   const { isLoading, headerContent, rowDatas } = props;
   return (
-    <div className="card-view">
+    <div className='card-view'>
       <Card.Group centered doubling>
-        {isLoading ? "" : rowDatas.map((rowData, index) => {
+        {isLoading ? '' : rowDatas.map((rowData, index) => {
           return (
             <Card key={index} fluid>
               <Card.Content>

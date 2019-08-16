@@ -2,7 +2,7 @@ import React from 'react';
 
 import './TabSidebar.scss';
 
-import { Sidebar, Grid, Menu, Icon, Divider, Header } from "semantic-ui-react";
+import { Sidebar, Grid, Menu, Icon, Divider, Header } from 'semantic-ui-react';
 
 import { MenuItems } from '../interface/app';
 
@@ -29,14 +29,14 @@ const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
       <Menu.Item key={index}
         index={index} active={ActiveIndex === index}
         onClick={handelMenuItemClick} icon
-      ><Icon name="table"></Icon>
+      ><Icon name='table'></Icon>
         {menuItem.name}
       </Menu.Item>
     ))}
     <Divider horizontal><Header as='h6'>Links</Header></Divider>
     {linkMenuItems.map((menuItem, index) => (
-      <Menu.Item key={index} icon as="a" href={menuItem.href} target="__blank">
-        <Icon name="external alternate"></Icon>
+      <Menu.Item key={index} icon as='a' href={menuItem.href} target='__blank'>
+        <Icon name='external alternate'></Icon>
         {menuItem.name}
       </Menu.Item>
     ))}
@@ -44,7 +44,7 @@ const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
 
   const tabPanel = (<Grid>
     {tabMenuItems.map((menuItems, index) =>
-      <Grid.Column key={index} className={(ActiveIndex === index) ? "" : "hidden"}>
+      <Grid.Column key={index} className={(ActiveIndex === index) ? '' : 'hidden'}>
         {menuItems.panel}
       </Grid.Column>
     )}
@@ -59,11 +59,11 @@ const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
         >{menuItems}
         </Sidebar>
         <Sidebar.Pusher dimmed={mobileSidebarVisible}>
-          <Menu borderless compact fixed="left" size="small" inverted color="blue">
+          <Menu borderless compact fixed='left' size='small' inverted color='blue'>
             <Menu.Item
-              className="mobile-sidebar-toggle"
+              className='mobile-sidebar-toggle'
               onClick={() => setMobileSidebarVisible(true)}
-            ><Icon fitted name="sidebar"></Icon>
+            ><Icon fitted name='sidebar'></Icon>
             </Menu.Item>
           </Menu>
           {tabPanel}
@@ -72,7 +72,7 @@ const TabSidebar: React.FunctionComponent<TabSidebarProps> = (props) => {
     </Grid.Row>
     <Grid.Row columns={1} only='computer'>
       <Sidebar.Pushable as={Grid.Column} className='computer-sidebar-container'>
-        <Menu vertical fixed="left" pointing secondary color='blue'
+        <Menu vertical fixed='left' pointing secondary color='blue'
         >{menuItems}
         </Menu>
         <Sidebar.Pusher>
