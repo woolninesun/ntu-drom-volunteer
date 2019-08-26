@@ -1,9 +1,12 @@
 import React from 'react';
 
-import { Header } from 'semantic-ui-react';
+import { Header, Segment } from 'semantic-ui-react';
+import ReactMarkdown from 'react-markdown';
+// import htmlParser from 'react-markdown/plugins/html-parser';
 import CardView from './components/CardView';
 
 import './DataViewTab.scss';
+import 'github-markdown-css'
 
 import { getRowDataFromWorksheetEntries } from './utilities/gsx';
 
@@ -14,10 +17,11 @@ interface DataViewProps {
     title: string,
     link: string
   }
+  infos: string
 };
 
 const DataView: React.FunctionComponent<DataViewProps> = (props) => {
-  const { worksheet } = props;
+  const { worksheet, infos } = props;
 
   // const [isError, setIsError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -37,6 +41,13 @@ const DataView: React.FunctionComponent<DataViewProps> = (props) => {
   return (
     <div className='data-view-tab'>
       <Header as='h1' textAlign='center' dividing>{worksheet.title}</Header>
+      {
+        (infos !== '' && infos !== undefined) ? (
+          <Segment className="markdown-body">
+            <ReactMarkdown source={infos} />
+          </Segment>
+        ) : null
+      }
       <CardView
         isLoading={isLoading}
         headerContent={Object.keys(rowDatas[0] || {})}

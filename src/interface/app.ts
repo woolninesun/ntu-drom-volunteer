@@ -15,5 +15,8 @@ export interface MenuItems {
 
 export interface Settings {
   title: string,
-  links: MenuItems[]
+  links: MenuItems[],
+  infos: {
+    [tabName: string]: string
+  }
 }

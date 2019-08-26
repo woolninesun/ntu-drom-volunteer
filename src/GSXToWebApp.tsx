@@ -12,9 +12,8 @@ import { getStringFromRawObject, getRowDataFromWorksheetEntries } from './utilit
 import { WorksheetLink, WorksheetEntry } from './interface/gsx';
 import { RowData, WorksheetData, Settings } from './interface/app';
 
-const defaultSettings: Settings = { title: '', links: [] };
-const defaultSettingData: RowData = { attribute: '', content: '' };
-const linkRegexp = new RegExp(/^\[(.+)\]\((.+)\)$/);
+const defaultSettings: Settings = { title: '', links: [], infos: {} };
+const defaultSettingData: RowData = { attribute: '', arguments1: '', arguments2: '' };
 
 const GSXToWebApp: React.FunctionComponent<{}> = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -34,16 +33,22 @@ const GSXToWebApp: React.FunctionComponent<{}> = () => {
                 const rawSetting = Object.assign(defaultSettingData, rowData);
 
                 if (rawSetting.attribute === 'title') {
-                  rawSettings.title = rawSetting.content;
+                  rawSettings.title = rawSetting.arguments1;
                 }
 
-                if (rawSetting.attribute === 'links') {
-                  const matches: string[] = rawSetting.content.match(linkRegexp) || [];
-                  rawSettings.links.push({ name: matches[1], href: matches[2] });
+                if (rawSetting.attribute === 'links' && rawSetting.arguments1 !== '') {
+                  rawSettings.links.push({
+                    name: rawSetting.arguments1,
+                    href: rawSetting.arguments2
+                  });
+                }
+
+                if (rawSetting.attribute === 'infos' && rawSetting.arguments1 !== '') {
+                  rawSettings.infos[rawSetting.arguments1] = rawSetting.arguments2;
                 }
               }
             );
-            setSettings({...rawSettings});
+            setSettings({ ...rawSettings });
           }
         }, (error) => {
           // setIsError(true);
@@ -101,7 +106,12 @@ const GSXToWebApp: React.FunctionComponent<{}> = () => {
         title={settings.title || title}
         tabMenuItems={worksheets.map((worksheet) => ({
           name: worksheet.title,
-          panel: (<DataViewTab worksheet={worksheet} />)
+          panel: (
+            <DataViewTab
+              worksheet={worksheet}
+              infos={settings.infos[worksheet.title]}
+            />
+          )
         }))}
         linkMenuItems={settings.links} />
     </Loading>
