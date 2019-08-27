@@ -4,13 +4,13 @@ import 'react-app-polyfill/stable'
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import 'normalize.css';
+import './static/semantic/semantic.min.css';
 import './index.scss';
 
-import GSXToWebApp from './GSXToWebApp';
+import BetterSheetApp from './BetterSheetApp';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<GSXToWebApp />, document.getElementById('root'));
+ReactDOM.render(<BetterSheetApp />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
